@@ -1,0 +1,48 @@
+body {
+    background-color: #ffd633 !important;
+
+
+}
+.icon-title{
+    height: 30px;
+    width: 30px;
+}
+.panel-heading {
+    background-color: #ffad33 !important;
+
+}
+
+a:link {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+a:active {
+    text-decoration: none;
+    color: black;
+}
+
+#precio-text {
+    font-size: 100%;
+    vertical-align: top;
+}
+
+#nombre-text {
+    font-size: 100%;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+h4 {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
