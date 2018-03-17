@@ -1,49 +1,103 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from events.models import Local,Evento,CatEvento
+from events.serializers import LocalSerializer,EventSerializer ,CategoriaSerializer
+from rest_framework.renderers import JSONRenderer
+from rest_framework import status
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
-# Create your views here.
-#  from django.contrib.auth.models import User, Group UserSerializer, GroupSerializer,
-from rest_framework import viewsets
-from events.serializers import  EventSerializer, LocalSerializer, CategoriaSerializer
-from events.models import Evento,Local, CategoriaEventos
-from django.views import generic
-from drf_multiple_model.views import MultipleModelAPIView
-from rest_framework import routers
-
-
-# class UserViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows users to be viewed or edited.
-#     """
-#     queryset = User.objects.all().order_by('-date_joined')
-#     serializer_class = UserSerializer
+# class ApiRoot(generics.GenericAPIView):
+#     name = 'api-root'
+#     def get(self,request,*args,**kwargs):
+#         return Response({
+#             'eventos' : reverse(EventosList.name,request=request),
+#             'locales' : reverse(LocalesList.name,request=request),
 #
+#         })
 #
-# class GroupViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
-#     TODO arreglar api para recuperar todo en un link
-class LocalesViewSet(viewsets.ModelViewSet):
-    queryset = Local.objects.all().filter(activo=True)
+
+class LocalesList(generics.ListCreateAPIView):
+    queryset = Local.objects.filter(activo=True)
     serializer_class = LocalSerializer
+    name = 'local-list'
 
-class EventsViewSet(viewsets.ModelViewSet):
-    queryset = Evento.objects.all().filter(activo=True)
-    serializer_class = EventSerializer
+class LocalesDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Local.objects.filter(activo=True)
+    serializer_class = LocalSerializer
+    name = 'local-detail'
 
-class CategoriaEventsViewSet(viewsets.ModelViewSet):
-    queryset = CategoriaEventos.objects.all()
+
+class CategoriasList(generics.ListCreateAPIView):
+    queryset = CatEvento.objects.all()
     serializer_class = CategoriaSerializer
+    name = 'catevento-list'
 
-class EventosView(generic.ListView):
-    template_name = './events/eventos.html'
-    context_object_name = 'locales_list'
-    def get_queryset(self):
-        return Local.objects.all().filter(activo=True)
+class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CatEvento.objects.all()
+    serializer_class = CategoriaSerializer
+    name = 'catevento-detail'
 
-class ApiViewTest(MultipleModelAPIView):
-    objectify = True
-    queryList = [(Local.objects.all().filter(activo=True),LocalSerializer),
-                 (Evento.objects.all().filter(activo=True),EventSerializer)]
+class EventosList(generics.ListCreateAPIView):
+    queryset = Evento.objects.filter(activo=True)
+    serializer_class = EventSerializer
+    name = 'evento-list'
+
+class EventosDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Evento.objects.filter(activo=True)
+    serializer_class = EventSerializer
+    name = 'evento-detail'
+
+#
+# class JSONResponse(HttpResponse):
+#     def __init__(self,data,**kwargs):
+#         content = JSONRenderer().render(data)
+#         kwargs["content_type"] = "application/json"
+#         super(JSONResponse,self).__init__(content,**kwargs)
+#
+#
+# @csrf_exempt
+# def local_list(request):
+#     if request.method == 'GET':
+#         locales = Local.objects.all()
+#         local_serializer = LocalSerializer(locales, many=True)
+#         return JSONResponse(local_serializer.data)
+#     return JSONResponse(LocalSerializer.errors,
+#                         status=status.HTTP_400_BAD_REQUEST)
+#
+#
+# @csrf_exempt
+# def local_detail(request, pk):
+#     try:
+#         local = Local.objects.get(pk=pk)
+#     except Local.DoesNotExist:
+#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+#     if request.method == 'GET':
+#         local_serializer = LocalSerializer(local)
+#         return JSONResponse(local_serializer.data)
+#
+#
+# @csrf_exempt
+# def event_list(request):
+#     if request.method == 'GET':
+#         events = Evento.objects.all()
+#         events_serializer = EventSerializer(events, many=True)
+#         return JSONResponse(events_serializer.data)
+#     return JSONResponse(EventSerializer.errors,
+#                         status=status.HTTP_400_BAD_REQUEST)
+#
+#
+# @csrf_exempt
+# def event_detail(request, pk):
+#     try:
+#         event = Evento.objects.get(pk=pk)
+#     except Evento.DoesNotExist:
+#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+#     if request.method == 'GET':
+#         events_serializer = EventSerializer(event)
+#         return JSONResponse(events_serializer.data)
+#
+#
+#
+#

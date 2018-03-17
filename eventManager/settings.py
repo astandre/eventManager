@@ -25,7 +25,7 @@ SECRET_KEY = '4$f_+pwhth*(im%*gv0qk$^ltm8o#1--#sku%y(4np(13!csot'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.3.118']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Events Manager
     'events.apps.EventsConfig',
+    # Django rest framework
     'rest_framework',
-    'drf_multiple_model'
 ]
 
 MIDDLEWARE = [

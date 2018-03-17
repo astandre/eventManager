@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Local, Evento, CategoriaEventos
+from .models import Local, Evento, CatEvento
 
 
 # Register your models here.
@@ -23,4 +23,4 @@ class EventosAdmin(admin.ModelAdmin):
 
 admin.site.register(Local,LocalesAdmin)
 admin.site.register(Evento,EventosAdmin)
-admin.site.register(CategoriaEventos)
+admin.site.register(CatEvento)
