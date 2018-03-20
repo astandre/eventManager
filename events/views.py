@@ -24,7 +24,7 @@ class LocalesList(generics.ListCreateAPIView):
     name = 'local-list'
 
 class LocalesDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Local.objects.filter(activo=True)
+    queryset = Local.objects.filter(activo=True).order_by('hora_inicio')
     serializer_class = LocalSerializer
     name = 'local-detail'
 

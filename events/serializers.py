@@ -56,9 +56,10 @@ class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
 class EventSerializer(serializers.HyperlinkedModelSerializer):
 
     local= serializers.SlugRelatedField(queryset=Local.objects.all(),
-                                        slug_field="cod_local")
+                                        slug_field="nombre_local")
     # local = LocalSerializer(many=True, read_only=True)
-    categorias_eventos = serializers.StringRelatedField(many=True)
+    categorias_eventos = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
 
     class Meta:
         model = Evento
@@ -68,12 +69,12 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'cod_evento',
             'nombre_evento',
             'descripcion_evento',
-            'activo',
+            # 'activo',
             'familiar',
             'fecha_inicio',
-            'hora_inicio',
+            # 'hora_inicio',
             'fecha_fin',
-            'hora_fin',
+            # 'hora_fin',
             'img',
             'local',
             'categorias_eventos'

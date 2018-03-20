@@ -17,7 +17,7 @@ class EventosAdmin(admin.ModelAdmin):
     fieldssets = []
     inlines = []
     list_display = ('nombre_evento', 'activo')
-    list_filter = ['hora_inicio','activo']
+    list_filter = ['fecha_inicio','activo']
     search_fields = ['nombre_evento']
 
 
