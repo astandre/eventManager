@@ -6,11 +6,13 @@ class Local(models.Model):
     nombre_local = models.CharField(max_length=20)
     activo = models.BooleanField(default=True)
     direccion_local = models.CharField(max_length=200)
+    latitud_local = models.CharField(max_length=200, default="0")
+    longitud_local = models.CharField(max_length=200, default="0")
     nombre_propietario = models.CharField(max_length=60)
     telefono_local = models.CharField(max_length=15)
     celular_local =models.CharField(max_length=12)
     email_local = models.EmailField()
-
+    img_local = models.CharField(max_length=300,default="img.png")
     class Meta:
         default_related_name = 'Local'
         verbose_name_plural = "Locales"
@@ -37,6 +39,9 @@ class Evento(models.Model):
     descripcion_evento = models.TextField()
     activo = models.BooleanField(default=True)
     familiar = models.BooleanField(default=True)
+    direccion_evento = models.CharField(max_length=200,default="0")
+    latitud_evento = models.CharField(max_length=200,default="0")
+    longitud_evento = models.CharField(max_length=200,default="0")
     fecha_inicio = models.DateTimeField()
     fecha_fin = models.DateTimeField()
     img = models.CharField(max_length=300)
