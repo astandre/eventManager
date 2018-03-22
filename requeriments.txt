@@ -1,0 +1,2 @@
+pip install Django==1.11.4
+pip install djangorestframework==3.7.1

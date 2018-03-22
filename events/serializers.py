@@ -78,7 +78,6 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             'direccion_evento',
             'latitud_evento',
             'longitud_evento',
-            'latitud'
             'fecha_fin',
             'img',
             'local',
