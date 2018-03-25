@@ -11,8 +11,4 @@ urlpatterns = [
     url(r'^locales/(?P<pk>[0-9]+)/$', views.LocalesDetail.as_view(), name=views.LocalesDetail.name),
     url(r'^categoria/$', views.CategoriasList.as_view(), name=views.CategoriasList.name),
     url(r'^categoria/(?P<pk>[0-9]+)/$', views.CategoriaDetail.as_view(), name=views.CategoriaDetail.name),
-
-    # url(r'^api/events/(?P<pk>[0-9]+)/$', views.event_detail),
-    # url(r'^api/locales/$', views.local_list),
-    # url(r'^api/locales/(?P<pk>[0-9]+)/$', views.local_detail),
 ]
