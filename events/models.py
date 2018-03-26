@@ -1,5 +1,5 @@
 from django.db import models
-
+# TODO cambiar los tamaños de los campos
 # Create your models here.
 class Local(models.Model):
     cod_local = models.AutoField(primary_key=True)
