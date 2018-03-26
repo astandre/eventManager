@@ -5,6 +5,21 @@ from events.serializers import LocalSerializer, EventSerializer, CategoriaSerial
 from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 from rest_framework import generics
+from django.shortcuts import render
+from django.shortcuts import render_to_response
+
+
+def index(request):
+    """
+    View of the main page
+    """
+    return render(request, 'Index.html')
+
+
+def handler404(request):
+    response = render_to_response('404.html')
+    response.status_code = 404
+    return response
 
 
 class LocalesList(generics.ListCreateAPIView):
