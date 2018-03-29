@@ -22,7 +22,7 @@ def handler404(request):
     return response
 
 
-class LocalesList(generics.ListCreateAPIView):
+class LocalesList(generics.ListAPIView):
     """
         View for all Locales
     """
@@ -32,7 +32,7 @@ class LocalesList(generics.ListCreateAPIView):
     name = 'local-list'
 
 
-class LocalesDetail(generics.RetrieveUpdateDestroyAPIView):
+class LocalesDetail(generics.RetrieveAPIView):
     """
     View for all locales detail
     """
@@ -41,7 +41,7 @@ class LocalesDetail(generics.RetrieveUpdateDestroyAPIView):
     name = 'local-detail'
 
 
-class CategoriasList(generics.ListCreateAPIView):
+class CategoriasList(generics.ListAPIView):
     """
     View for all Categorias
     """
@@ -50,7 +50,7 @@ class CategoriasList(generics.ListCreateAPIView):
     name = 'catevento-list'
 
 
-class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
+class CategoriaDetail(generics.RetrieveAPIView):
     """
     View for all Categorias in detail
     """
@@ -59,7 +59,7 @@ class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
     name = 'catevento-detail'
 
 
-class EventosList(generics.ListCreateAPIView):
+class EventosList(generics.ListAPIView):
     """
     View for all eventos
     """
@@ -68,10 +68,21 @@ class EventosList(generics.ListCreateAPIView):
     name = 'evento-list'
 
 
-class EventosDetail(generics.RetrieveUpdateDestroyAPIView):
+class EventosDetail(generics.RetrieveAPIView):
     """
     View fro all eventos in detail
     """
     queryset = Evento.objects.filter(activo=True)
     serializer_class = EventSerializer
     name = 'evento-detail'
+
+class EventosCategoriaFilter(generics.ListAPIView):
+    serializer_class = EventSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        cod_categoria = self.kwargs['cod_categoria']
+        return Evento.objects.filter(categorias_eventos__cod_categoria=cod_categoria)
