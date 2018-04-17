@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from events.models import Local, Evento, CatEvento
-from events.serializers import LocalSerializer, EventSerializer, CategoriaSerializer
+from events.models import Local, Evento
+from events.serializers import LocalSerializer, EventSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 from rest_framework import generics
@@ -41,24 +41,6 @@ class LocalesDetail(generics.RetrieveAPIView):
     name = 'local-detail'
 
 
-class CategoriasList(generics.ListAPIView):
-    """
-    View for all Categorias
-    """
-    queryset = CatEvento.objects.all()
-    serializer_class = CategoriaSerializer
-    name = 'catevento-list'
-
-
-class CategoriaDetail(generics.RetrieveAPIView):
-    """
-    View for all Categorias in detail
-    """
-    queryset = CatEvento.objects.all()
-    serializer_class = CategoriaSerializer
-    name = 'catevento-detail'
-
-
 class EventosList(generics.ListAPIView):
     """
     View for all eventos
@@ -76,6 +58,7 @@ class EventosDetail(generics.RetrieveAPIView):
     serializer_class = EventSerializer
     name = 'evento-detail'
 
+
 class EventosCategoriaFilter(generics.ListAPIView):
     serializer_class = EventSerializer
 
@@ -85,4 +68,4 @@ class EventosCategoriaFilter(generics.ListAPIView):
         the user as determined by the username portion of the URL.
         """
         cod_categoria = self.kwargs['cod_categoria']
-        return Evento.objects.filter(categorias_eventos__cod_categoria=cod_categoria)
+        return Evento.objects.filter(nombre_categoria=cod_categoria)
