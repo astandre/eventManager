@@ -72,6 +72,8 @@ def eventos_filter_api(request, id):
                                                                                    "fecha_inicio", "fecha_fin", "image",
                                                                                    "categoria", "id_evento").get(
                 activo=True, id_evento=id)
+            direccion = Direccion.objects.get(evento__id_evento=evento["id_evento"])
+            evento["direccion"] = direccion.__str__()
         except Evento.DoesNotExist:
             return JsonResponse({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
