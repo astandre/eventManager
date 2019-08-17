@@ -32,8 +32,10 @@ def eventos_api(request):
                                                                           "familiar", "direccion",
                                                                           "fecha_inicio", "fecha_fin", "image",
                                                                           "categoria", "id_evento").filter(activo=True))
-
-        return JsonResponse({"eventos": eventos}, status=status.HTTP_200_OK)
+        if len(eventos) > 0:
+            return JsonResponse({"eventos": eventos}, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
     else:
         return JsonResponse({"Error": "Only GET is Allowed"}, status=status.HTTP_403_FORBIDDEN)
 
@@ -49,9 +51,31 @@ def eventos_categoria_api(request, categoria):
                                                                               "fecha_inicio", "fecha_fin", "image",
                                                                               "categoria", "id_evento").filter(
                     categoria=categoria, activo=True))
-            return JsonResponse({"eventos": eventos}, status=status.HTTP_200_OK)
+            if len(eventos) > 0:
+                return JsonResponse({"eventos": eventos}, status=status.HTTP_200_OK)
+            else:
+                return JsonResponse({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+
         else:
             return JsonResponse({"eventos": "Categoria de evento no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+
+    else:
+        return JsonResponse({"Error": "Only GET is Allowed"}, status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['GET'])
+def eventos_filter_api(request, id):
+    if request.method == 'GET':
+        try:
+            evento = Evento.objects.annotate(id_local=F('local__id_local')).values("id_local", "nombre", "descripcion",
+                                                                                   "familiar", "direccion",
+                                                                                   "fecha_inicio", "fecha_fin", "image",
+                                                                                   "categoria", "id_evento").get(
+                activo=True, id_evento=id)
+        except Evento.DoesNotExist:
+            return JsonResponse({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return JsonResponse(evento, status=status.HTTP_200_OK)
 
     else:
         return JsonResponse({"Error": "Only GET is Allowed"}, status=status.HTTP_403_FORBIDDEN)
